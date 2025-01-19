@@ -14,5 +14,4 @@ public class USer {
 
     String username;
     String password;
-
 }
