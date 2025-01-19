@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.questapp.entities.USer;
 import com.project.questapp.repository.UserRepository;
+import com.project.questapp.services.UserService;
 
 @RestController
 @RequestMapping("/users")
@@ -21,10 +22,10 @@ import com.project.questapp.repository.UserRepository;
 public class UserController {
     //controller gelen istekleri karsilayan methodlari iceren classlardir.
 
-    private UserRepository userRepository;
+    private UserService userService;
 
-    public UserController(UserRepository userRepository){
-        this.userRepository=userRepository;
+    public UserController(UserService userService){
+        this.userService=userService;
         //spring boot bizim icin arka planda bulacak ve constructor injection yapacak.
 
     }
@@ -32,42 +33,32 @@ public class UserController {
     @GetMapping
     //path verilmezse /users icin calismaya devam eder
     public List<USer> getAllUser(){
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
     
 
     @PostMapping
     public USer createUser(@RequestBody USer newUser){
-        return userRepository.save(newUser);
+        return userService.saveOneUser(newUser);
     }
 
     @GetMapping("/{userId}") //requestmapping e verilene ekler
     public USer getOneUser(@PathVariable Long userId){
-        //user olmayabilir exception ekle
-        return userRepository.findById(userId).orElse(null);
+        
+        return userService.getOneUser(userId);
         
     }
     @PutMapping("/{userId}")
     //varolan idli useri degistir
     public USer updateUser(@PathVariable Long userId,@RequestBody USer newUser){
 
-        Optional<USer> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            USer foundUser = user.get();
-            foundUser.setUsername(newUser.getUsername());
-            foundUser.setPassword(newUser.getPassword());
-            userRepository.save(foundUser);
-            return foundUser;
-        }
-        else{
-            return null;//degistir
-        }
+        return userService.updateOneUser(userId,newUser);
 
     }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable Long userId){
-        userRepository.deleteById(userId);
+        userService.deleteOneUser(userId);
 
     }
 
