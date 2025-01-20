@@ -12,6 +12,7 @@ import com.project.questapp.repository.CommentRepository;
 import com.project.questapp.repository.PostRepository;
 import com.project.questapp.repository.UserRepository;
 import com.project.questapp.requests.CommentCreateRequest;
+import com.project.questapp.requests.CommentUpdateRequest;
 
 @Service
 public class CommentService {
@@ -67,6 +68,18 @@ public class CommentService {
 
         }
 
+    }
+
+    public Comment updateCommentById(Long commentId, CommentUpdateRequest commentUpdateRequest) {
+        Optional<Comment> comment = commentRepository.findById(commentId);
+        if (comment.isPresent()) {
+            Comment commentToUpdate= comment.get();
+            commentToUpdate.setText(commentUpdateRequest.getText());
+            return commentRepository.save(commentToUpdate);
+        }
+        else{
+            return null;
+        }
     }
 
 
