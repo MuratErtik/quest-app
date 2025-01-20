@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.questapp.entities.Comment;
+import com.project.questapp.requests.CommentCreateRequest;
 import com.project.questapp.services.CommentService;
 
 @RestController
@@ -33,6 +36,12 @@ public class CommentController {
     @GetMapping("/{commentId}")
     public Comment getOneComment(@PathVariable Long commentId){
         return commentService.getOneCommentById(commentId);
+    }
+
+
+    @PostMapping
+    public Comment createComment(@RequestBody CommentCreateRequest request){
+        return commentService.createComment(request);
     }
 
 
