@@ -26,9 +26,8 @@ public class CommentController {
 
         return commentService.getAllCommentsWithParams(userId,postId);
 
-
-
-
     }
 
 }
+
+
