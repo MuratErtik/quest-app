@@ -25,7 +25,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public USer getOneUser(Long userId) {
+    public USer getOneUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
         //exeption eklenecek!
         

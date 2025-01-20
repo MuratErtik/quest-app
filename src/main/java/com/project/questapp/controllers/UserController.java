@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping("/{userId}") //requestmapping e verilene ekler
     public USer getOneUser(@PathVariable Long userId){
         
-        return userService.getOneUser(userId);
+        return userService.getOneUserById(userId);
         
     }
     @PutMapping("/{userId}")
