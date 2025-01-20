@@ -82,6 +82,11 @@ public class CommentService {
         }
     }
 
+    public void deleteCommentById(Long commentId) {
+        // TODO Auto-generated method stub
+        commentRepository.deleteById(commentId);
+    }
+
 
 
 
