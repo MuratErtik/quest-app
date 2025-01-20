@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,20 @@ public class CommentController {
         return commentService.getAllCommentsWithParams(userId,postId);
 
     }
+
+
+    @GetMapping("/{commentId}")
+    public Comment getOneComment(@PathVariable Long commentId){
+        return commentService.getOneCommentById(commentId);
+    }
+
+
+
+
+
+
+
+
 
 }
 
