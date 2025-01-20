@@ -38,7 +38,7 @@ public class CommentService {
             return commentRepository.findByUserId(userId.get());
         }
         else if (postId.isPresent()) {
-            return commentRepository.findByPostid(postId.get());
+            return commentRepository.findByPostId(postId.get());
         }
         else{
             return commentRepository.findAll();

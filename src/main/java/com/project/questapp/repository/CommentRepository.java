@@ -9,12 +9,12 @@ import com.project.questapp.entities.Comment;
 import com.project.questapp.entities.Post;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
-    List<Comment> findByUserIdAndPostId(Long long1,long long2);
+    List<Comment> findByUserIdAndPostId(Long userId,long postId);
     //findby ile bizim yazidigmiz degeri birlestirip arkada sorgusunu yapar!
 
     List<Comment> findByUserId(Long userId);
 
-    List<Comment> findByPostid(Long postId);
+    List<Comment> findByPostId(Long postId);
 
 
 }

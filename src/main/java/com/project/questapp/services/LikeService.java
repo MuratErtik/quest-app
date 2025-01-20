@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.project.questapp.entities.Comment;
 import com.project.questapp.entities.Like;
 import com.project.questapp.entities.Post;
 import com.project.questapp.entities.USer;
@@ -33,7 +32,7 @@ public class LikeService {
             return likeRepository.findByUserId(userId.get());
         }
         else if (postId.isPresent()) {
-            return likeRepository.findByPostid(postId.get());
+            return likeRepository.findByPostId(postId.get());
         }
         else{
             return likeRepository.findAll();
