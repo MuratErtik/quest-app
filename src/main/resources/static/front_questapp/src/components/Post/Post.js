@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./Post.scss";
+
 import ReactDOM from "react-dom";
 
 function Post(){
