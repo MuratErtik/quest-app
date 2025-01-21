@@ -1,0 +1,7 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    //elemanlar bir bloga sigsin mi yoksa alt satira gecsin mi 
+    justify-content: space-around;
+    //icindeki componenetler kenarlar ve kendi aralarinda bosluk birakarak dizilirler
+}
