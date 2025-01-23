@@ -38,7 +38,7 @@ public class JwtTokenProvider {
      * Bu, token'in kimin için oluşturulduğunu belirtir.
      */
 
-    public Long userIdFromJwt(String token) {
+    public Long getuserIdFromJwt(String token) {
         // tokenden userid i alacak
         Claims claims = (Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJwt(token).getBody());
         return Long.parseLong(claims.getSubject());
