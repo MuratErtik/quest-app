@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.questapp.entities.USer;
 import com.project.questapp.repository.UserRepository;
+import com.project.questapp.responses.UserResponse;
 import com.project.questapp.services.UserService;
 
 @RestController
@@ -43,9 +44,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}") //requestmapping e verilene ekler
-    public USer getOneUser(@PathVariable Long userId){
+    public UserResponse getOneUser(@PathVariable Long userId){
         
-        return userService.getOneUserById(userId);
+        return new UserResponse(userService.getOneUserById(userId));
         
     }
     @PutMapping("/{userId}")
