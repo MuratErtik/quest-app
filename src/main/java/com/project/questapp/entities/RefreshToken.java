@@ -24,6 +24,7 @@ import lombok.Data;
 @Table(name = "refresh_token")
 @Data
 public class RefreshToken {
+    //usera ozel bir token olmasi yeterli
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
