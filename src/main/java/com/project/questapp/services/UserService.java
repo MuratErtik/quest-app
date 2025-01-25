@@ -1,19 +1,31 @@
 package com.project.questapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.project.questapp.entities.Comment;
+import com.project.questapp.entities.Like;
 import com.project.questapp.entities.USer;
+import com.project.questapp.repository.CommentRepository;
+import com.project.questapp.repository.LikeRepository;
+import com.project.questapp.repository.PostRepository;
 import com.project.questapp.repository.UserRepository;
 
 @Service
 public class UserService {
     UserRepository userRepository;
+    CommentRepository commentRepository;
+    LikeRepository likeRepository;
+    PostRepository postRepository;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository,CommentRepository commentRepository,LikeRepository likeRepository,PostRepository postRepository){
         this.userRepository=userRepository;
+        this.commentRepository=commentRepository;
+        this.likeRepository=likeRepository;
+        this.postRepository=postRepository;
 
     }
 
@@ -52,6 +64,23 @@ public class UserService {
     public USer getOneUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public List<Object> getUserActivity(Long userId) {
+        List<Long> postIds =  postRepository.findTopByUserId(userId);
+        if (postIds.isEmpty()) {
+            return null;
+        }
+        List<Comment> comments= commentRepository.findUserCommentByPostId(postIds);
+        List<Like> likes= likeRepository.findUserLikeByPostId(postIds);
+        List<Object> result= new ArrayList<>();
+        result.addAll(comments);
+        result.addAll(likes);
+        return result;
+
+
+    }
+
+    
 
 
 

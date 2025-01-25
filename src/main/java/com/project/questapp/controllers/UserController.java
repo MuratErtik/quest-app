@@ -62,6 +62,11 @@ public class UserController {
 
     }
 
+    @GetMapping("/activity/{userId}")
+    public List<Object> getUserActivity(@PathVariable Long userId){
+        return userService.getUserActivity(userId);
+    }
+
 
 
 }
