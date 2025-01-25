@@ -1,5 +1,6 @@
 package com.project.questapp.services;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,7 @@ public class CommentService {
             commentToSave.setUser(user);
             commentToSave.setPost(post);
             commentToSave.setText(request.getText());
+            commentToSave.setCreateDate( new Date(0));
             return commentRepository.save(commentToSave);
             
         }
