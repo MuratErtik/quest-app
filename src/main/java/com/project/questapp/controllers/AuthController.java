@@ -64,7 +64,7 @@ public class AuthController {
         userService.saveOneUser(user);
         authResponse.setMessage("User has been registered successfully");
 
-        return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
+        return new ResponseEntity<>(authResponse,HttpStatus.CREATED);   
 
     }
 

@@ -1,5 +1,7 @@
 package com.project.questapp.entities;
 
+import java.sql.Date;
+
 import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,6 +18,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 @Entity
@@ -55,5 +59,8 @@ public class Comment {
     @Column(columnDefinition = "text")
     // Veritabanında bu özelliğin bir TEXT sütunu olacağını söyler.
     String text;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    Date createDate;
 
 }
