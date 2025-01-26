@@ -2,6 +2,7 @@ package com.project.questapp.services;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,12 +29,13 @@ public class RefreshTokenService {
     }
 
     @SuppressWarnings("unchecked")
-    public String createRefreshToken(Optional<USer>  user) {
+    public String createRefreshToken(USer  user) {
         RefreshToken refreshToken = new RefreshToken();
+        user= refreshTokenRepository.findUserByUserId(user.getId());
 
-        user = refreshTokenRepository.findUserByUserId(user.get().getId());
+        
 
-        if (user.isPresent()) {
+        if (user!=null) {
             
             refreshToken.setExpiryDate((java.sql.Date) Date.from(Instant.now().plusSeconds(expireSeconds)));
             refreshTokenRepository.save(refreshToken);
@@ -41,7 +43,7 @@ public class RefreshTokenService {
 
         }
         else{
-            refreshToken.setUser(user.get());
+            refreshToken.setUser(user);
             refreshToken.setToken(UUID.randomUUID().toString());
             refreshToken.setExpiryDate((java.sql.Date) Date.from(Instant.now().plusSeconds(expireSeconds)));
             refreshTokenRepository.save(refreshToken);
