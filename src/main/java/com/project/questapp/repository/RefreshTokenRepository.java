@@ -11,6 +11,7 @@ import com.project.questapp.entities.USer;
 
 public interface RefreshTokenRepository extends JpaRepository {
     USer findUserByUserId(Long userId);
+    RefreshToken findUserById(Long userId);
     
 
 }

@@ -31,7 +31,7 @@ public class RefreshTokenService {
     @SuppressWarnings("unchecked")
     public String createRefreshToken(USer  user) {
         RefreshToken refreshToken = new RefreshToken();
-        user= refreshTokenRepository.findUserByUserId(user.getId());
+        user = refreshTokenRepository.findUserByUserId(user.getId());
 
         
 
@@ -52,6 +52,12 @@ public class RefreshTokenService {
         }
 
 
+    }
+
+    public RefreshToken getByUser(Long userId) {
+        return refreshTokenRepository.findUserById(userId);
+
+        
     }
 
 }

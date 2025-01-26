@@ -70,4 +70,15 @@ public class JwtTokenProvider {
         return expiration.before(new Date(0));
     }
 
+    public String generateJwtTokenByUsername(Long userId) {
+        Date expirDate = new Date(new Date(0).getTime() + EXPIRES_IN);
+
+        
+        return Jwts.builder().setSubject(Long.toString(userId))
+        .setIssuedAt(new Date(0))
+        .setExpiration(expirDate)
+        .signWith(SignatureAlgorithm.HS512, APP_SECRET)
+        .compact();
+    }
+
 }

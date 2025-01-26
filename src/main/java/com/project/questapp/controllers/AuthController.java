@@ -1,5 +1,6 @@
 package com.project.questapp.controllers;
 
+import java.io.ObjectInputFilter.Status;
 import java.util.Optional;
 
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Authentication;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.questapp.entities.RefreshToken;
 import com.project.questapp.entities.USer;
+import com.project.questapp.requests.RefreshRequest;
 import com.project.questapp.requests.UserRequest;
 import com.project.questapp.responses.AuthResponse;
 import com.project.questapp.security.JwtTokenProvider;
@@ -82,6 +85,32 @@ public class AuthController {
         authResponse.setUserId(user.getId());
         return new ResponseEntity<>(authResponse,HttpStatus.CREATED);   
 
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest refreshRequest){
+        AuthResponse authResponse = new AuthResponse();
+        RefreshToken refreshToken= refreshTokenService.getByUser(refreshRequest.getUserId());
+        //gelen tokenla dbdeki token aynimi kontrol et 
+
+        if (refreshToken.getToken().equals(refreshRequest.getRefreshToken()) && refreshTokenService.isRefreshExpired(refreshToken)) {
+            //yeni access bir token olusturt
+            USer user = refreshToken.getUser();
+            
+            String jwtToken = jwtTokenProvider.generateJwtTokenByUsername(user.getId());
+            authResponse.setUserId(user.getId());
+
+
+            authResponse.setMessage("User has been refreshed successfully");
+            authResponse.setAccessToken(jwtToken);
+            authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
+            authResponse.setUserId(user.getId());
+            return new ResponseEntity<>(authResponse,HttpStatus.OK);  
+        }
+        else{
+            authResponse.setMessage("refresh token is invalid!");
+            return new ResponseEntity<>(authResponse,HttpStatus.UNAUTHORIZED);
+        }
     }
 
 
