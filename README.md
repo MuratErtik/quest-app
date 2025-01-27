@@ -1,158 +1,127 @@
-Quest-App is a backend application designed to provide users with a platform where they can freely share their ideas, express their opinions by liking posts they find interesting, and engage in discussions by leaving comments on various topics.
+# Quest-App
+
+Quest-App is a backend application designed to provide users with a platform where they can:
+
+- **Share Ideas:** Users can post their thoughts, opinions, and ideas on the platform.
+- **Like Posts:** Interact with content by liking posts they find interesting or enjoyable.
+- **Comment on Posts:** Engage in discussions by leaving comments on posts.
+
+## Features
+
+1. **User Authentication**
+   - Secure authentication using JWT (JSON Web Token).
+   - Refresh token support for seamless user sessions.
+
+2. **Post Management**
+   - Create, update, and delete posts.
+   - Retrieve posts by specific users or all users.
+
+3. **Comments**
+   - Add comments to posts.
+   - Update and delete comments.
+
+4. **Likes**
+   - Like posts and track popular content.
+
+5. **Security**
+   - Integrated with Spring Security for role-based access control.
+   - Custom `JwtAuthenticationFilter` and `JwtTokenProvider` for secure API interactions.
+
+## Project Structure
+
+```
+src
+├── main
+│   ├── java/com/project/questapp
+│   │   ├── config
+│   │   │   └── SecurityConfig.java
+│   │   ├── controllers
+│   │   │   ├── AuthController.java
+│   │   │   ├── CommentController.java
+│   │   │   ├── LikeController.java
+│   │   │   ├── PostController.java
+│   │   │   └── UserController.java
+│   │   ├── entities
+│   │   │   ├── Comment.java
+│   │   │   ├── Like.java
+│   │   │   ├── Post.java
+│   │   │   ├── RefreshToken.java
+│   │   │   └── User.java
+│   │   ├── exceptions
+│   │   │   └── UsernameNotFoundException.java
+│   │   ├── repository
+│   │   │   ├── CommentRepository.java
+│   │   │   ├── LikeRepository.java
+│   │   │   ├── PostRepository.java
+│   │   │   ├── RefreshTokenRepository.java
+│   │   │   └── UserRepository.java
+│   │   ├── requests
+│   │   │   ├── CommentCreateRequest.java
+│   │   │   ├── CommentUpdateRequest.java
+│   │   │   ├── LikeCreateRequest.java
+│   │   │   ├── PostCreateRequest.java
+│   │   │   ├── PostUpdateRequest.java
+│   │   │   ├── RefreshRequest.java
+│   │   │   └── UserRequest.java
+│   │   ├── responses
+│   │   │   ├── AuthResponse.java
+│   │   │   ├── CommentResponse.java
+│   │   │   ├── LikeResponse.java
+│   │   │   ├── PostResponse.java
+│   │   │   └── UserResponse.java
+│   │   ├── security
+│   │   │   ├── JwtAuthenticationEntryPoint.java
+│   │   │   ├── JwtAuthenticationFilter.java
+│   │   │   ├── JwtTokenProvider.java
+│   │   │   └── JwtUserDetails.java
+│   │   ├── services
+│   │   │   ├── CommentService.java
+│   │   │   ├── LikeService.java
+│   │   │   ├── PostService.java
+│   │   │   ├── RefreshTokenService.java
+│   │   │   ├── UserDetailsServiceImpl.java
+│   │   │   └── UserService.java
+│   │   └── QuestAppApplication.java
+│   ├── resources
+│   │   ├── static
+│   │   ├── templates
+│   │   └── application.properties
+├── test
+├── target
+└── .gitattributes
+```
+
+## Technologies Used
+
+- **Java**: Core programming language.
+- **Spring Boot**: Framework for building the backend application.
+- **Spring Security**: Handles authentication and authorization.
+- **JPA/Hibernate**: Manages database interactions.
+- **MySQL**: Database used for storing application data.
+- **Lombok**: Simplifies code with annotations like `@Data`, `@Getter`, and `@Setter`.
 
 
-Project Structure
 
-The project is organized into the following packages:
+## API Endpoints
 
-1. config
+### Authentication
+- **POST** `/auth/login`: User login.
+- **POST** `/auth/register`: User registration.
 
-Contains the configuration files for security and other settings.
+### Posts
+- **GET** `/posts`: Get all posts.
+- **POST** `/posts`: Create a new post.
+- **PUT** `/posts/{postId}`: Update a post.
+- **DELETE** `/posts/{postId}`: Delete a post.
 
-SecurityConfig.java: Configures Spring Security for authentication and authorization.
+### Comments
+- **GET** `/comments`: Get all comments.
+- **POST** `/comments`: Add a comment.
+- **PUT** `/comments/{commentId}`: Update a comment.
+- **DELETE** `/comments/{commentId}`: Delete a comment.
 
-2. controllers
+### Likes
+- **POST** `/likes`: Like a post.
+- **DELETE** `/likes/{likeId}`: Remove a like.
 
-Defines REST API endpoints to handle requests from the client.
 
-AuthController.java: Manages authentication and token generation.
-
-CommentController.java: Handles operations related to comments.
-
-LikeController.java: Handles like-related operations.
-
-PostController.java: Manages post-related operations.
-
-UserController.java: Manages user-related operations.
-
-3. entities
-
-Defines the core data models used in the application.
-
-Comment.java: Represents the comments entity.
-
-Like.java: Represents the likes entity.
-
-Post.java: Represents the posts entity.
-
-RefreshToken.java: Represents the refresh tokens used for authentication.
-
-User.java: Represents the users entity.
-
-4. exceptions
-
-Custom exception handling.
-
-UsernameNotFoundException.java: Handles errors when a username is not found.
-
-5. repository
-
-Interfaces for database operations.
-
-CommentRepository.java: Manages database interactions for comments.
-
-LikeRepository.java: Manages database interactions for likes.
-
-PostRepository.java: Manages database interactions for posts.
-
-RefreshTokenRepository.java: Manages database interactions for refresh tokens.
-
-UserRepository.java: Manages database interactions for users.
-
-6. requests
-
-Contains DTOs (Data Transfer Objects) for incoming API requests.
-
-CommentCreateRequest.java: Handles comment creation requests.
-
-CommentUpdateRequest.java: Handles comment update requests.
-
-LikeCreateRequest.java: Handles like creation requests.
-
-PostCreateRequest.java: Handles post creation requests.
-
-PostUpdateRequest.java: Handles post update requests.
-
-RefreshRequest.java: Handles token refresh requests.
-
-UserRequest.java: Handles user-related requests.
-
-7. responses
-
-Contains DTOs for API responses.
-
-AuthResponse.java: Authentication response object.
-
-CommentResponse.java: Comment-related response object.
-
-LikeResponse.java: Like-related response object.
-
-PostResponse.java: Post-related response object.
-
-UserResponse.java: User-related response object.
-
-8. security
-
-Handles security features like JWT authentication and token management.
-
-JwtAuthenticationEntryPoint.java: Handles unauthorized access attempts.
-
-JwtAuthenticationFilter.java: Filters incoming requests for JWT validation.
-
-JwtTokenProvider.java: Provides utilities for generating and validating JWT tokens.
-
-JwtUserDetails.java: Manages user details for authentication.
-
-9. services
-
-Business logic layer for handling the core functionality.
-
-CommentService.java: Manages comment-related operations.
-
-LikeService.java: Manages like-related operations.
-
-PostService.java: Manages post-related operations.
-
-RefreshTokenService.java: Manages refresh token-related operations.
-
-UserDetailsServiceImpl.java: Implements user detail service for Spring Security.
-
-UserService.java: Manages user-related operations.
-
-Technologies Used
-
-Spring Boot: Backend framework.
-
-Spring Security: Authentication and authorization.
-
-JWT (JSON Web Token): For stateless authentication.
-
-JPA/Hibernate: ORM for database operations.
-
-H2 Database: In-memory database for development.
-
-Maven: Dependency management and build tool.
-
-Features
-
-User Authentication:
-
-Registration and login.
-
-JWT-based authentication.
-
-Post Management:
-
-Create, update, delete, and view posts.
-
-Comment Management:
-
-Add, update, delete, and view comments.
-
-Like System:
-
-Add or remove likes on posts.
-
-Token Refresh:
-
-Refresh expired JWT tokens.
